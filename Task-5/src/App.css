@@ -1,0 +1,17 @@
+
+
+.button-on{
+  height: 80px;
+  width: 500px;
+  background-color: blue;
+  margin-left: 100px;
+  margin-right: auto;
+}
+
+.button-close{
+  height: 80px;
+  width: 500px;
+  margin-left: 100px;
+  margin-right: auto;
+  background-color: red;
+}
