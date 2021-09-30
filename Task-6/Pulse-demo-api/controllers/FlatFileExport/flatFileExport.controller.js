@@ -44,7 +44,8 @@ class FlatFileExportController {
         if (this.getConfiguration(configId)) {
 
             const {error} = validateCourse(req.body);  
-            if(error) return res.status(400).send(error.details[0].message);
+            if(error) 
+            return res.status(400).send(error.details[0].message);
 
             this.db.collection('exportConfigurations').findOneAndUpdate({ _id: ObjectId(configId) }, payload)
                 .then(() => {
@@ -70,9 +71,12 @@ class FlatFileExportController {
 validationSchema(action) {
     let defaultSchema =
         [
-            check('clientId', 'ClientId is required').exists().trim().notEmpty(),
-            check('team', 'Team name is required').exists().trim().notEmpty(),
-            check('tool', 'Tool is required.').exists().trim().notEmpty()
+            check('clientId', 'ClientId is required')
+             .exists().trim().notEmpty(),
+            check('team', 'Team name is required')
+             .exists().trim().notEmpty(),
+            check('tool', 'Tool is required.')
+             .exists().trim().notEmpty()
         ]
 
     if (action === 'edit') {
@@ -94,15 +98,18 @@ validate(req, res, next) {
     const errors = validationResult(req)
 
     if (errors.isEmpty()) {
+        res.json('Empty')
         return next()
     }
     const extractedErrors = []
     errors.array().map((err) => {
-    if(err.value === "" || err.param === 'configId')
+    if(err.value === "" &
+       err.param === 'configId')
+
         extractedErrors.push({ currentValue: err.value, [err.param]: err.msg })
     })
 
-    return res.json({ status: "error", message: extractedErrors })
+    return res.status(422).json({ errors: extractedErrors })
 }
 }
 
